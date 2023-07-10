@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-3">
+    <h1 class="text-center my-5">Marketing Application</h1>
+    <table class="table table-bordered mt-5">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Phone Number</th>
+                <th>Client Name</th>
+                <th>Vendor Name</th>
+                <th>Vendor Company</th>
+                <th>Rate</th>
+                <th>Contract Type</th>
+                <th>Status</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in details %}
+            <tr>
+                <td>{{i.date}}</td>
+                <td>{{i.phone_number}}</td>
+                <td>{{i.client_name}}</td>
+                <td>{{i.vendor_name}}</td>
+                <td>{{i.vendor_company}}</td>
+                <td>{{i.rate}}</td>
+                <td>{{i.contract_type}}</td>
+                <td>{{i.status}}</td>
+                <td><a href="{% url 'edit' i.id %}"><i class="bi bi-pencil-fill"></i></a></td>
+                <td><a href="{% url 'delete' i.id %}"><i class="bi bi-trash-fill"></i></a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="text-center">
+        <a href="{% url 'add' %}"><button class="btn btn-primary my-2">Add New</button></a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="POST" autocomplete="off">
+  {% csrf_token %}
+  <div class="row">
+    <div class="col-6 mx-auto mt-4">
+      <div class="card">
+        <div class="card-header">
+          <h1 class="text-center">Edit Details</h1>
+        </div>
+        <div class="card-body">
+          <div class="col-6 mx-auto form-floating">
+            <input type="date" class="form-control" id="date" placeholder="Enter Date" name='date'
+              value="{{edit_detail.date}}">
+            <label for="date">Enter Date: </label>
+          </div>
+          <div class="col-6 mx-auto mt-3 form-floating">
+            <input type="number" class="form-control" id="phone_number" placeholder="Enter Phone Number" name='phone_number'
+              value="{{edit_detail.phone_number}}">
+            <label for="phone_number">Enter Phone Number: </label>
+          </div>
+          <div class="col-6 mt-3 mx-auto form-floating">
+            <input type="text" class="form-control" id="client_name" placeholder="Enter Client Name" name='client_name'
+              value="{{edit_detail.client_name}}">
+            <label for="client_name">Enter Client Name: </label>
+          </div>
+          <div class="col-6 mt-3 mx-auto form-floating">
+            <input type="text" class="form-control" id="vendor_name" placeholder="Enter Vendor Name" name='vendor_name'
+              value="{{edit_detail.vendor_name}}">
+            <label for="vendor_name">Enter Vendor Name: </label>
+          </div>
+          <div class="col-6 mt-3 mx-auto form-floating">
+            <input type="text" class="form-control" id="vendor_company" placeholder="Enter Vendor Company" name='vendor_company'
+              value="{{edit_detail.vendor_company}}">
+            <label for="vendor_company">Enter Vendor Company: </label>
+          </div>
+          <div class="col-6 mt-3 mx-auto form-floating">
+            <input type="number" class="form-control" id="rate" placeholder="Enter Rate" name='rate'
+              value="{{edit_detail.rate}}">
+            <label for="rate">Enter Rate: </label>
+          </div>
+          <div class="col-6 mt-3 mx-auto form-floating">
+            <input type="text" class="form-control" id="contract_type" placeholder="Enter Contract Type" name='contract_type'
+              value="{{edit_detail.contract_type}}">
+            <label for="contract_type">Enter Contract Type: </label>
+          </div>
+          <div class="col-6 mt-3 mx-auto form-floating">
+            <input type="text" class="form-control" id="status" placeholder="Enter Status" name='status'
+              value="{{edit_detail.status}}">
+            <label for="status">Enter Status: </label>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="text-center mx-auto">
+            <input class="btn btn-primary" type="submit" value="Save Changes">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+{% endblock %}

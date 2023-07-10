@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+    <form method="POST" autocomplete="off">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-6 mx-auto mt-5">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="text-center">Add Details</h1>
+                    </div>
+                    <div class="card-body">
+                        <div class="col-6 mx-auto">
+                            {{ form.date }}
+                        </div>
+                        <div class="col-6 mx-auto mt-4">
+                            {{ form.phone_number }}
+                        </div>
+                        <div class="col-6 mx-auto mt-4">
+                            {{ form.client_name }}
+                        </div>
+                        <div class="col-6 mx-auto mt-4">
+                            {{ form.vendor_name }}
+                        </div>
+                        <div class="col-6 mx-auto mt-4">
+                            {{ form.vendor_company }}
+                        </div>
+                        <div class="col-6 mx-auto mt-4">
+                            {{ form.rate }}
+                        </div>
+                        <div class="col-6 mx-auto mt-4">
+                            {{ form.contract_type }}
+                        </div>
+                        <div class="col-6 mx-auto mt-4">
+                            {{ form.status }}
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="text-center mx-auto">
+                            <input class="btn btn-primary" type="submit" value="Submit">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
