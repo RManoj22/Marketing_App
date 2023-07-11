@@ -3,35 +3,46 @@
     <form method="POST" autocomplete="off">
         {% csrf_token %}
         <div class="row">
-            <div class="col-6 mx-auto mt-5">
+            <div class="col-5 mx-auto mt-3">
                 <div class="card">
                     <div class="card-header">
                         <h1 class="text-center">Add Details</h1>
                     </div>
                     <div class="card-body">
-                        <div class="col-6 mx-auto">
-                            {{ form.date }}
+                        <div class="col-6 mx-auto form-floating">
+                                {{ form.date }}
+                              <label for="rate">Date: </label>
                         </div>
-                        <div class="col-6 mx-auto mt-4">
-                            {{ form.phone_number }}
+                        <div class="col-6 mx-auto mt-3 form-floating">
+                                {{ form.phone_number }}
+                              <label for="rate">Phone Number: </label>
                         </div>
-                        <div class="col-6 mx-auto mt-4">
-                            {{ form.client_name }}
+                        <div class="col-6 mx-auto mt-3 form-floating">
+                                {{ form.client_name }}
+                              <label for="rate">Client Name: </label>
                         </div>
-                        <div class="col-6 mx-auto mt-4">
-                            {{ form.vendor_name }}
+                        <div class="col-6 mx-auto mt-3 form-floating">
+                                {{ form.vendor_name }}
+                              <label for="rate">Vendor Name: </label>
                         </div>
-                        <div class="col-6 mx-auto mt-4">
-                            {{ form.vendor_company }}
+                        <div class="col-6 mx-auto mt-3 form-floating">
+                                {{ form.vendor_company }}
+                              <label for="rate">Vendor Company: </label>
                         </div>
-                        <div class="col-6 mx-auto mt-4">
-                            {{ form.rate }}
+                        <div class="col-6 mx-auto mt-3">
+                            <div class="input-group form-floating">
+                                    {{ form.rate }}
+                                  <label for="rate">Enter Rate: </label>
+                                <span class="input-group-text">$</span>
+                              </div>
                         </div>
-                        <div class="col-6 mx-auto mt-4">
-                            {{ form.contract_type }}
+                        <div class="col-6 mx-auto mt-3 form-floating">
+                                {{ form.contract_type }}
+                              <label for="rate">Contract Type: </label>
                         </div>
-                        <div class="col-6 mx-auto mt-4">
-                            {{ form.status }}
+                        <div class="col-6 mx-auto mt-3 form-floating">
+                                {{ form.status }}
+                              <label for="rate">Status: </label>
                         </div>
                     </div>
                     <div class="card-footer">

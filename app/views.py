@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import MyTable
 from .forms import MyTableForm
+import datetime
 
 # Create your views here.
 
@@ -19,11 +20,13 @@ def addnew(request):
 
 def edit(request,id):
     edit_detail = MyTable.objects.get(id=id)
+    date = edit_detail.date
+    date_str = date.strftime('%d-%m-%Y')
     form = MyTableForm(request.POST,instance=edit_detail)
     if form.is_valid():
         form.save()
         return redirect('/table')
-    return render(request,'edit.html',{'edit_detail':edit_detail})
+    return render(request,'edit.html',{'edit_detail':edit_detail, 'date_str': date_str})
 
 def delete(request,id):
     detail = MyTable.objects.get(id=id)
