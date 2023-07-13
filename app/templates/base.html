@@ -13,17 +13,27 @@
 </head>
 
 <body>
-
-  <nav class="navbar navbar-dark bg-dark mb-3">
-    <div class="container">
-        <a class="navbar-brand" href="{% url 'details' %}">
-            <img src="https://intellectoglobal.com/wp-content/uploads/2022/04/IG-Logo.svg" alt="Intellecto Global" width="300" height="55">
-        </a>
-        <div class="me-5 text-light">
-            <h2 class="navbar-heading">Marketing Application</h2>
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'details' %}">
+        <img src="https://intellectoglobal.com/wp-content/uploads/2022/04/IG-Logo.svg" alt="Intellecto Global"
+          width="300" height="55">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mynavbar">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a href="{% url 'add' %}" class="nav-link text-light">Add New</a>
+          </li>
+        </ul>
+        <div class="text-center text-light">
+          <h2 class="navbar-heading">Marketing Application</h2>
         </div>
+      </div>
     </div>
-</nav>
+  </nav>
   {% block content %}
   {% endblock content %}
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
