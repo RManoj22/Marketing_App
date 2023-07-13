@@ -20,13 +20,12 @@ def addnew(request):
 
 def edit(request,id):
     edit_detail = MyTable.objects.get(id=id)
-    date = edit_detail.date
-    date_str = date.strftime('%d-%m-%Y')
+    contract_type = edit_detail.contract_type
     form = MyTableForm(request.POST,instance=edit_detail)
     if form.is_valid():
         form.save()
         return redirect('/table')
-    return render(request,'edit.html',{'edit_detail':edit_detail, 'date_str': date_str})
+    return render(request,'edit.html',{'edit_detail':edit_detail, 'contract_type ': contract_type })
 
 def delete(request,id):
     detail = MyTable.objects.get(id=id)
