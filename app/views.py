@@ -13,7 +13,10 @@ def signup(request):
                 return redirect('signup_success')
         except Exception as e:
             return HttpResponseServerError(f"An error occurred: {str(e)}")
-    return render(request, 'signup.html', {'form': form})
+    return render(request, 'sign_up.html', {'form': form})
+
+def signin(request):
+    return render(request, 'sign_in.html')
 
 def details(request):
     try:
@@ -31,7 +34,7 @@ def addnew(request):
             form = MyTableForm(request.POST)
             if form.is_valid():
                 form.save()
-                return redirect('/table')
+                return redirect('details')
         except Exception as e:
             return HttpResponseServerError(f"An error occurred: {str(e)}")
     return render(request, 'form.html', {'form': form})
@@ -44,7 +47,7 @@ def edit(request, id):
             form = MyTableForm(request.POST, instance=edit_detail)
             if form.is_valid():
                 form.save()
-                return redirect('/table')
+                return redirect('details')
         else:
             form = MyTableForm(instance=edit_detail)
         return render(request, 'edit.html', {'edit_detail': edit_detail, 'contract_type': contract_type, 'form': form})
@@ -57,7 +60,7 @@ def delete(request, id):
     try:
         detail = MyTable.objects.get(id=id)
         detail.delete()
-        return redirect('/table')
+        return redirect('details')
     except MyTable.DoesNotExist:
         return HttpResponseServerError("Record not found.")
     except Exception as e:
