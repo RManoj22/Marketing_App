@@ -1,50 +1,73 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container-fluid">
-    <div class="card mt-5">
-        <div class="card-header text-bg-dark">
-            <h2 class="text-center">Details</h2>
+    <div class="card mt-3">
+        <div class="card-header text-bg-dark d-flex justify-content-between">
+            <h4 class="text-center">Details</h4>
+            <a href="{% url 'add' %}">
+                <button class="btn btn-outline-primary">Add New <i class="fa-solid fa-plus"></i></button>
+            </a>
         </div>
         <div class="card-body">
-            <table class="table table-bordered mt-5">
-                <thead class="">
-                    <tr>
-                        <th>Client Name</th>
-                        <th>Entry Date</th>
-                        <th>Modified At</th>
-                        <th>Contact Number</th>
-                        <th>Vendor Name</th>
-                        <th>Vendor Company</th>
-                        <th>Rate</th>
-                        <th>Currency</th>
-                        <th>Contract Type</th>
-                        <th>Status</th>
-                        <th>Comments</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for i in details %}
-                    <tr>
-                        <td>{{i.client_name}}</td>
-                        <td>{{i.date}}</td>
-                        <td>{{i.modified_at}}</td>
-                        <td>{{i.contact_number}}</td>
-                        <td>{{i.vendor_name}}</td>
-                        <td>{{i.vendor_company}}</td>
-                        <td>{{i.rate}}</td>
-                        <td>{{i.currency}}</td>
-                        <td>{{i.contract_type}}</td>
-                        <td>{{i.status}}</td>
-                        <td>{{i.comments}}</td>
-                        <td><a href="{% url 'edit' i.id %}"><i class="bi bi-pencil-fill"></i></a></td>
-                        <td><a href="{% url 'delete' i.id %}"><i class="bi bi-trash-fill"></i></a></td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="mt-2">
+                <form method="get">
+                    <label class="form-label">Status : </label>
+                    {{filter.form.status}}
+                    <label class="form-label ms-3">Currency : </label>
+                    {{filter.form.currency}}
+                    <button class="btn btn-primary btn-sm ms-4" type="submit">Filter <i
+                            class="fa-solid fa-filter"></i></button>
+                </form>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered mt-4">
+                    <thead>
+                        <tr>
+                            <th>Client Name</th>
+                            <th>Entry Date</th>
+                            <th>Modified At</th>
+                            <th>Contact Number</th>
+                            <th>Vendor Name</th>
+                            <th>Vendor Company</th>
+                            <th>Rate</th>
+                            <th>Currency</th>
+                            <th>Contract Type</th>
+                            <th>Status</th>
+                            <th>Comments</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in details %}
+                        <tr>
+                            <td>{{i.client_name}}</td>
+                            <td>{{i.date | date:"j/n/Y, h:i a"}}</td>
+                            <td>{{i.modified_at|date:"j/n/Y, h:i a"}}</td>
+                            <td>{{i.contact_number}}</td>
+                            <td>{{i.vendor_name}}</td>
+                            <td>{{i.vendor_company}}</td>
+                            <td>{{i.rate}}</td>
+                            <td>{{i.currency}}</td>
+                            <td>{{i.contract_type}}</td>
+                            <td>{{i.status}}</td>
+                            <td>{{i.comments}}</td>
+                            <td class="text-center"><a href="{% url 'edit' i.id %}"><i
+                                        class="fa-solid fa-pencil"></i></a></td>
+                            <td class="text-center"><a href="{% url 'delete' i.id %}"><i
+                                        class="fa-solid fa-trash"></i></a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
+<style>
+    .btn-sm {
+        font-size: 16px;
+        padding: 0.25rem 0.5rem;
+    }
+</style>
 {% endblock %}

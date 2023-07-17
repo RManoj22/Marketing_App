@@ -1,25 +1,13 @@
 from django import forms
 from .models import MyTable
-from phonenumber_field.formfields import PhoneNumberField
-from phonenumber_field.widgets import PhoneNumberPrefixWidget
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
-currency_choices = [
-        ('USD', 'USD'),
-        ('EUR', 'EUR'),
-        ('GBP', 'GBP'),
-    ]
-contract_choices = [
-        ('Remote', 'Remote'),
-        ('On Site', 'On Site'),
-        ('Hybrid', 'Hybrid'),
-    ]
 
-status_choices = [
-        ('On Board ', 'On Board'),
-        ('In Progress', 'In Progress'),
-        ('No Response', 'No Response'),
-        ('Closed', 'Closed'),
-    ]
+class SignUpForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username', 'password', 'password1']
 
 class MyTableForm(forms.ModelForm):
 
@@ -29,13 +17,13 @@ class MyTableForm(forms.ModelForm):
         model = MyTable
         fields = '__all__'
         widgets = {
-            'contact_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Client Name'}),
             'client_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Client Name'}),
+            'contact_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Contact Number'}),
             'vendor_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Vendor Name'}),
             'vendor_company': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Vendor Company'}),
             'rate': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Rate'}),
-            'currency': forms.Select(choices=currency_choices, attrs={'class':'form-control', 'placeholder': 'Currency'}),
-            'contract_type': forms.Select(choices=contract_choices, attrs={'class':'form-control', 'placeholder': 'Contract Type'}),
-            'status': forms.Select(choices=status_choices, attrs={'class': 'form-control', 'placeholder': 'Status'}),
+            'currency': forms.Select(choices=MyTable.currency_choices, attrs={'class':'form-control', 'placeholder': 'Currency'}),
+            'contract_type': forms.Select(choices=MyTable.contract_choices, attrs={'class':'form-control', 'placeholder': 'Contract Type'}),
+            'status': forms.Select(choices=MyTable.status_choices, attrs={'class': 'form-control', 'placeholder': 'Status'}),
             'comments': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Comments'}),
         }

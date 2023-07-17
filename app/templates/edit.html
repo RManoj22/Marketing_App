@@ -8,7 +8,7 @@
       <div class="col-md-12">
         <div class="card mt-5">
           <div class="card-header text-bg-dark">
-            <h2 class="text-center">Edit Details</h2>
+            <h3 class="text-center">Edit Details</h3>
           </div>
           <div class="card-body">
             <div class="row">
@@ -20,7 +20,7 @@
               </div>
               <div class="col-md-6 mt-3">
                 <div class="form-floating">
-                  <input type="number" class="form-control" id="contact_number" name='contact_number' value="{{ edit_detail.contact_number }}">
+                  <input type="text" class="form-control" id="contact_number" name='contact_number' value="{{ edit_detail.contact_number }}">
                   <label for="contact_number">Contact Number</label>
                 </div>
               </div>
@@ -44,31 +44,31 @@
               </div>
               <div class="col-md-3 mt-3">
                 <div class="form-floating">
-                  <select class="form-control" id="currency" name='currency'>
-                    <option value="USD" {% if edit_detail.currency == 'USD' %}selected{% endif %}>USD</option>
-                    <option value="EUR" {% if edit_detail.currency == 'EUR' %}selected{% endif %}>EUR</option>
-                    <option value="GBP" {% if edit_detail.currency == 'GBP' %}selected{% endif %}>GBP</option>
+                  <select class="form-control" id="currency" name="currency">
+                    <option value="USD" {% if edit_detail.currency == "USD" %}selected{% endif %}>USD</option>
+                    <option value="EUR" {% if edit_detail.currency == "EUR" %}selected{% endif %}>EUR</option>
+                    <option value="GBP" {% if edit_detail.currency == "GBP" %}selected{% endif %}>GBP</option>
                   </select>
                   <label for="currency">Currency</label>
                 </div>
               </div>
               <div class="col-md-6 mt-3">
                 <div class="form-floating">
-                  <select class="form-control" id="contract_type" name='contract_type'>
-                    <option value="Remote" {% if edit_detail.contract_type == 'Remote' %}selected{% endif %}>Remote</option>
-                    <option value="On Site" {% if edit_detail.contract_type == 'On Site' %}selected{% endif %}>On Site</option>
-                    <option value="Hybrid" {% if edit_detail.contract_type == 'Hybrid' %}selected{% endif %}>Hybrid</option>
+                  <select class="form-control" id="contract_type" name="contract_type">
+                    <option value="Remote" {% if edit_detail.contract_type == "Remote" %}selected{% endif %}>Remote</option>
+                    <option value="On Site" {% if edit_detail.contract_type == "On Site" %}selected{% endif %}>On Site</option>
+                    <option value="Hybrid" {% if edit_detail.contract_type == "Hybrid" %}selected{% endif %}>Hybrid</option>
                   </select>
                   <label for="contract_type">Contract Type</label>
                 </div>
               </div>
               <div class="col-md-6 mt-3">
                 <div class="form-floating">
-                  <select class="form-control" id="status" name='status'>
-                    <option value="On Board" {% if edit_detail.status == 'On Board' %}selected{% endif %}>On Board</option>
-                    <option value="In Progress" {% if edit_detail.status == 'In Progress' %}selected{% endif %}>In Progress</option>
-                    <option value="No Response" {% if edit_detail.status == 'No Response' %}selected{% endif %}>No Response</option>
-                    <option value="Closed" {% if edit_detail.status == 'Closed' %}selected{% endif %}>Closed</option>
+                  <select class="form-control" id="status" name="status">
+                    <option value="On Board" {% if edit_detail.status == "On Board" %}selected{% endif %}>On Board</option>
+                    <option value="In Progress" {% if edit_detail.status == "In Progress" %}selected{% endif %}>In Progress</option>
+                    <option value="No Response" {% if edit_detail.status == "No Response" %}selected{% endif %}>No Response</option>
+                    <option value="Closed" {% if edit_detail.status == "Closed" %}selected{% endif %}>Closed</option>
                   </select>
                   <label for="status">Status</label>
                 </div>

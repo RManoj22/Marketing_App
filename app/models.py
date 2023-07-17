@@ -1,18 +1,36 @@
 from django.db import models
-from phonenumber_field.modelfields import PhoneNumberField
-
+from django.core.validators import RegexValidator
 
 class MyTable(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
-    contact_number = models.CharField(max_length=15)
+    contact_number_validator = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
+    contact_number = models.CharField(validators=[contact_number_validator],max_length=15)
     client_name = models.CharField(max_length=20)
     vendor_name = models.CharField(max_length=20)
     vendor_company = models.CharField(max_length=20)
     rate = models.DecimalField(max_digits=8, decimal_places=2)
-    currency = models.CharField(max_length=10)
-    contract_type = models.CharField(max_length=20)
-    status = models.CharField(max_length=20)
+    currency_choices = [
+        ('USD', 'USD'),
+        ('EUR', 'EUR'),
+        ('GBP', 'GBP'),
+    ]
+    currency = models.CharField(max_length=10, choices=currency_choices)
+    
+    contract_choices = [
+            ('Remote', 'Remote'),
+            ('On Site', 'On Site'),
+            ('Hybrid', 'Hybrid'),
+        ]
+    contract_type = models.CharField(max_length=20, choices=contract_choices)
+    
+    status_choices = [
+            ('On Board', 'On Board'),
+            ('In Progress', 'In Progress'),
+            ('No Response', 'No Response'),
+            ('Closed', 'Closed'),
+        ]
+    status = models.CharField(max_length=20, choices=status_choices)
     comments = models.CharField(max_length=100)
 
     def __str__(self):
