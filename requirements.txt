@@ -3,3 +3,4 @@ django-phonenumber-field==7.1.0
 django-phonenumbers==1.0.1
 Babel==2.12.1
 django-filter==23.2
+gunicorn
