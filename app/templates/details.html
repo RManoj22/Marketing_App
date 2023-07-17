@@ -54,8 +54,8 @@
                             <td>{{i.comments}}</td>
                             <td class="text-center"><a href="{% url 'edit' i.id %}"><i
                                         class="fa-solid fa-pencil"></i></a></td>
-                            <td class="text-center"><a href="{% url 'delete' i.id %}"><i
-                                        class="fa-solid fa-trash"></i></a></td>
+                            <td class="text-center"><a onclick="return confirm('Are you sure you want to delete this?')" id="delete"
+                                    href="{% url 'delete' i.id %}"><i class="fa-solid fa-trash"></i></a></td>
                         </tr>
                         {% endfor %}
                     </tbody>

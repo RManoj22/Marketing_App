@@ -71,8 +71,8 @@
                     <div class="card-footer">
                         <div class="text-center">
                             <input class="btn btn-primary me-4" type="submit" value="Submit">
-                            <a href="{% url 'details'%}" class="btn btn-primary me-4" role="button">Cancel</a>
-                            <button class="btn btn-danger" type="button" onclick="resetForm()">Reset</button>
+                            <a href="{% url 'details'%}" class="btn btn-primary me-4" role="button" onclick="confirmCancel()">Cancel</a>
+                            <button class="btn btn-danger" type="button" onclick="confirmReset()">Reset</button>
                         </div>
                     </div>
                 </div>
@@ -82,8 +82,45 @@
 </form>
 
 <script>
-    function resetForm() {
-        document.getElementById("form").reset();
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("contactForm").addEventListener("submit", function(event) {
+        var contactNumberInput = document.getElementById("id_contact_number");
+        var contactNumberValue = contactNumberInput.value;
+
+        // Perform the regex validation
+        var regex = /^\+?1?\d{9,15}$/;
+        if (!regex.test(contactNumberValue)) {
+            // Show an alert indicating validation failed
+            alert("Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.");
+            event.preventDefault(); // Prevent the form from submitting
+        }
+    });
+});
+
+  function confirmReset() {
+    
+    const confirmation = confirm('Are you sure you want to reset the form?');
+
+    if (confirmation) {
+      resetForm();
     }
+  }
+
+  function resetForm() {
+    document.getElementById("form").reset();
+  }
+
+  function confirmCancel() {
+
+    const confirmation = confirm('Are you sure you want to cancel?');
+
+    if (confirmation) {
+      window.location.href = "{% url 'details' %}";
+    }
+
+    else {
+      event.preventDefault();
+    }
+  }
 </script>
 {% endblock %}

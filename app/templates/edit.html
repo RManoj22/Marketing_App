@@ -84,7 +84,7 @@
           <div class="card-footer">
             <div class="text-center mx-auto">
               <input class="btn btn-primary me-5" type="submit" value="Save Changes">
-              <a href="{% url 'details' %}" class="btn btn-primary ms-3" role="button">Cancel</a>
+              <a href="{% url 'details' %}" class="btn btn-primary ms-3" role="button" onclick="confirmCancel()">Cancel</a>
             </div>
           </div>
         </div>
@@ -92,4 +92,18 @@
     </div>
   </div>
 </form>
+<script>
+    function confirmCancel() {
+    
+    const confirmation = confirm('Are you sure you want to cancel?');
+
+    if (confirmation) {
+      window.location.href = "{% url 'details' %}";
+    }
+
+    else {
+      event.preventDefault();
+    }
+  }
+</script>
 {% endblock %}

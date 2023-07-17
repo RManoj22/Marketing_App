@@ -18,7 +18,7 @@ class MyTableForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'client_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Client Name'}),
-            'contact_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Contact Number'}),
+            'contact_number': forms.TextInput(attrs={'id': 'contactForm','class': 'form-control', 'placeholder': 'Contact Number'}),
             'vendor_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Vendor Name'}),
             'vendor_company': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Vendor Company'}),
             'rate': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Rate'}),
