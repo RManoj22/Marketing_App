@@ -23,7 +23,8 @@ class MyTableForm(forms.ModelForm):
 
     class Meta:
         model = MyTable
-        fields = '__all__'
+        fields = ['client_name', 'contact_number', 'vendor_name', 'vendor_company', 'rate', 'currency', 'contract_type', 'status', 'comments']
+        exclude = ['user']
         widgets = {
             'client_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Client Name'}),
             'contact_number': forms.TextInput(attrs={'id': 'contactForm','class': 'form-control', 'placeholder': 'Contact Number'}),

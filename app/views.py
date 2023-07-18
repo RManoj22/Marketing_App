@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponseServerError
+from django.http import HttpResponseForbidden, HttpResponseServerError
 from .models import MyTable
 from .forms import MyTableForm, SignUpForm, LoginForm
 from .filters import FormFilter
@@ -51,7 +51,8 @@ def signout(request):
 @login_required(login_url='signin')
 def details(request):
     try:
-        details = MyTable.objects.all()
+        # details = MyTable.objects.all()
+        details = MyTable.objects.filter(user=request.user)
         filter = FormFilter(request.GET, queryset=details)
         details = filter.qs
         return render(request, 'details.html', {'details': details, 'filter': filter})
@@ -65,7 +66,9 @@ def addnew(request):
         try:
             form = MyTableForm(request.POST)
             if form.is_valid():
-                form.save()
+                new_entry = form.save(commit=False)
+                new_entry.user = request.user
+                new_entry.save()
                 return redirect('details')
         except Exception as e:
             return HttpResponseServerError(f"An error occurred: {str(e)}")
@@ -75,6 +78,9 @@ def addnew(request):
 def edit(request, id):
     try:
         edit_detail = MyTable.objects.get(id=id)
+        if edit_detail.user != request.user:
+            return HttpResponseForbidden("You don't have permission to edit this record.")
+        
         contract_type = edit_detail.contract_type
         if request.method == 'POST':
             form = MyTableForm(request.POST, instance=edit_detail)
@@ -93,6 +99,9 @@ def edit(request, id):
 def delete(request, id):
     try:
         detail = MyTable.objects.get(id=id)
+        if detail.user != request.user:
+            return HttpResponseForbidden("You don't have permission to delete this record.")
+        
         detail.delete()
         return redirect('details')
     except MyTable.DoesNotExist:
