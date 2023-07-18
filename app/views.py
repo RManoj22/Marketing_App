@@ -18,7 +18,7 @@ def signup(request):
             if form.is_valid():
                 form.save()
                 user = form.cleaned_data.get('username')
-                messages.success(request, f'Hi {user}, Account Created Successfully')
+                messages.success(request, f'Hi {user}, Account Created Successfully. Use your credentials to login ')
                 return redirect('signin')
         else:
             form = SignUpForm()
@@ -42,7 +42,7 @@ def signin(request):
                     messages.info(request, ' Username or Password is Incorrect')
         else:
             form = LoginForm()
-    return render(request, 'sign_in.html' , {'hide_signin': hide_signin})
+    return render(request, 'sign_in.html' , {'form':form, 'hide_signin': hide_signin})
 
 def signout(request):
     logout(request)
