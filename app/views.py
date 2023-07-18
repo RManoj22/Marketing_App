@@ -1,23 +1,54 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseServerError
 from .models import MyTable
-from .forms import MyTableForm, SignUpForm
-from .filters import FormFilter 
+from .forms import MyTableForm, SignUpForm, LoginForm
+from .filters import FormFilter
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+
 
 def signup(request):
-    form = SignUpForm(request.POST)
-    if request.method == 'POST':
-        try:
+    hide_signin = False
+    if request.user.is_authenticated:
+        return redirect('details')
+    else:
+        if request.method == 'POST':
+            form = SignUpForm(request.POST)
             if form.is_valid():
                 form.save()
-                return redirect('signup_success')
-        except Exception as e:
-            return HttpResponseServerError(f"An error occurred: {str(e)}")
-    return render(request, 'sign_up.html', {'form': form})
+                user = form.cleaned_data.get('username')
+                messages.success(request, f'Hi {user}, Account Created Successfully')
+                return redirect('signin')
+        else:
+            form = SignUpForm()
+        return render(request, 'sign_up.html', {'form': form, 'hide_signin': hide_signin})
 
 def signin(request):
-    return render(request, 'sign_in.html')
+    hide_signin = False
+    if request.user.is_authenticated:
+        return redirect('details')
+    else:
+        if request.method == 'POST':
+            form = LoginForm(request.POST)
+            if form.is_valid():
+                username = request.POST.get('username')
+                password = request.POST.get('password')
+                user =  authenticate(request, username=username, password=password)
+                if user is not None:
+                    login(request, user)
+                    return redirect('details')
+                else:
+                    messages.info(request, ' Username or Password is Incorrect')
+        else:
+            form = LoginForm()
+    return render(request, 'sign_in.html' , {'hide_signin': hide_signin})
 
+def signout(request):
+    logout(request)
+    return redirect('signin')
+
+@login_required(login_url='signin')
 def details(request):
     try:
         details = MyTable.objects.all()
@@ -27,6 +58,7 @@ def details(request):
     except Exception as e:
         return HttpResponseServerError(f"An error occurred: {str(e)}")
 
+@login_required(login_url='signin')
 def addnew(request):
     form = MyTableForm()
     if request.method == 'POST':
@@ -39,6 +71,7 @@ def addnew(request):
             return HttpResponseServerError(f"An error occurred: {str(e)}")
     return render(request, 'form.html', {'form': form})
 
+@login_required(login_url='signin')
 def edit(request, id):
     try:
         edit_detail = MyTable.objects.get(id=id)
@@ -56,6 +89,7 @@ def edit(request, id):
     except Exception as e:
         return HttpResponseServerError(f"An error occurred: {str(e)}")
 
+@login_required(login_url='signin')
 def delete(request, id):
     try:
         detail = MyTable.objects.get(id=id)

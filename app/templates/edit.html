@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form method="POST" autocomplete="off">
+<form method="POST" autocomplete="off" onsubmit="return confirm('Are you sure you want to save the changes?')">
   {% csrf_token %}
   <div class="container">
     <div class="row">
@@ -83,7 +83,7 @@
           </div>
           <div class="card-footer">
             <div class="text-center mx-auto">
-              <input class="btn btn-primary me-5" type="submit" value="Save Changes">
+              <input class="btn btn-primary me-5" type="submit" value="Save Changes" >
               <a href="{% url 'details' %}" class="btn btn-primary ms-3" role="button" onclick="confirmCancel()">Cancel</a>
             </div>
           </div>

@@ -13,7 +13,7 @@
   <script src="https://kit.fontawesome.com/7f5caf3864.js" crossorigin="anonymous"></script>
   <style>
     #id{
-      background-image: url('https://images.pexels.com/photos/373543/pexels-photo-373543.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+      background-image: url('');
       height: 100vh;
     }
   </style>
@@ -30,7 +30,13 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="mynavbar">
-        <a href="{% url 'signup' %}"><button class="btn btn-primary">Sign Up </button></a>
+        {% if hide_signin %}
+        <a href="{% url 'signin' %}"><button class="btn btn-primary">Log In</button></a>
+        {% endif %}
+        {% if user.is_authenticated %}
+        <h5 class="me-3">Hello, {{user.username}}</h5>
+        <a href="{% url 'signout' %}"><button class="btn btn-primary">Log Out</button></a>
+        {% endif %}
       </div>
     </div>
   </nav>

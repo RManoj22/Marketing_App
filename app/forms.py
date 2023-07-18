@@ -1,17 +1,25 @@
 from django import forms
 from .models import MyTable
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django import forms
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=100)
+    password = forms.CharField(widget=forms.PasswordInput)
 
 
 class SignUpForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['username', 'password', 'password1']
+        fields = ['username', 'password1', 'password2']
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}),
+            }
+        
 
 class MyTableForm(forms.ModelForm):
-
-    # contact_number = PhoneNumberField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Client Name'}))
 
     class Meta:
         model = MyTable
