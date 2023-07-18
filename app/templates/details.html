@@ -15,6 +15,10 @@
                     {{filter.form.status}}
                     <label class="form-label ms-3">Currency : </label>
                     {{filter.form.currency}}
+                    {% if user.is_superuser %}
+                    <label class="form-label ms-3">User : </label>
+                    {{filter.form.user}}
+                    {% endif %}
                     <button class="btn btn-primary btn-sm ms-4" type="submit">Filter <i
                             class="fa-solid fa-filter"></i></button>
                 </form>
@@ -34,6 +38,9 @@
                             <th>Contract Type</th>
                             <th>Status</th>
                             <th>Comments</th>
+                            {% if user.is_superuser %}
+                            <th>User</th>
+                            {% endif %}
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
@@ -52,6 +59,9 @@
                             <td>{{i.contract_type}}</td>
                             <td>{{i.status}}</td>
                             <td>{{i.comments}}</td>
+                            {% if user.is_superuser %}
+                            <td>{{i.user}}</td>
+                            {% endif %}
                             <td class="text-center"><a href="{% url 'edit' i.id %}"><i
                                         class="fa-solid fa-pencil"></i></a></td>
                             <td class="text-center"><a onclick="confirmDelete()" id="delete"

@@ -6,4 +6,4 @@ class FormFilter(django_filters.FilterSet):
 
     class Meta:
          model = MyTable
-         fields = ['status','currency']
+         fields = ['status','currency','user']

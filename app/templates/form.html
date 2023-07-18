@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form method="POST" autocomplete="off" id="form">
+<form method="POST" autocomplete="off">
     {% csrf_token %}
     <div class="container">
         <div class="row">
@@ -67,6 +67,9 @@
                                 </div>
                             </div>
                         </div>
+                        <div class=" text-center">
+                            <div class="mx-auto">{{form.errors}}</div>
+                        </div>
                     </div>
                     <div class="card-footer">
                         <div class="text-center">
@@ -82,21 +85,6 @@
 </form>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("contactForm").addEventListener("submit", function(event) {
-        var contactNumberInput = document.getElementById("id_contact_number");
-        var contactNumberValue = contactNumberInput.value;
-
-        // Perform the regex validation
-        var regex = /^\+?1?\d{9,15}$/;
-        if (!regex.test(contactNumberValue)) {
-            // Show an alert indicating validation failed
-            alert("Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.");
-            event.preventDefault(); // Prevent the form from submitting
-        }
-    });
-});
-
   function confirmReset() {
     
     const confirmation = confirm('Are you sure you want to reset the form?');

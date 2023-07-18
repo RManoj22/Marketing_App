@@ -51,8 +51,10 @@ def signout(request):
 @login_required(login_url='signin')
 def details(request):
     try:
-        # details = MyTable.objects.all()
-        details = MyTable.objects.filter(user=request.user)
+        if request.user.is_superuser:
+            details = MyTable.objects.all()
+        else:
+            details = MyTable.objects.filter(user=request.user)
         filter = FormFilter(request.GET, queryset=details)
         details = filter.qs
         return render(request, 'details.html', {'details': details, 'filter': filter})
