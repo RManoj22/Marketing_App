@@ -1,5 +1,7 @@
+import datetime
+import xlwt
 from django.shortcuts import render, redirect
-from django.http import HttpResponseForbidden, HttpResponseServerError
+from django.http import HttpResponse, HttpResponseForbidden, HttpResponseServerError
 from .models import MyTable
 from .forms import MyTableForm, SignUpForm, LoginForm
 from .filters import FormFilter
@@ -80,7 +82,7 @@ def addnew(request):
 def edit(request, id):
     try:
         edit_detail = MyTable.objects.get(id=id)
-        if edit_detail.user != request.user:
+        if not (edit_detail.user == request.user or request.user.is_superuser):
             return HttpResponseForbidden("You don't have permission to edit this record.")
         
         contract_type = edit_detail.contract_type
@@ -101,7 +103,7 @@ def edit(request, id):
 def delete(request, id):
     try:
         detail = MyTable.objects.get(id=id)
-        if detail.user != request.user:
+        if not (detail.user == request.user or request.user.is_superuser):
             return HttpResponseForbidden("You don't have permission to delete this record.")
         
         detail.delete()
@@ -110,3 +112,49 @@ def delete(request, id):
         return HttpResponseServerError("Record not found.")
     except Exception as e:
         return HttpResponseServerError(f"An error occurred: {str(e)}")
+
+def export_excel(request):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=Data_' + str(datetime.datetime.now()) + '.xls'
+
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('Data')
+    rownum = 0
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    if request.user.is_superuser:
+        columns = ['Client Name', 'Entry Date', 'Modified At', 'Contact Number', 'Vendor Name', 'Vendor Company', 'Rate', 'Currency', 'Contract Type', 'Status', 'Comments', 'User']
+
+        for col_num in range(len(columns)):
+            ws.write(rownum, col_num, columns[col_num], font_style)
+
+        font_style = xlwt.XFStyle()
+
+        rows = MyTable.objects.select_related('user').values_list('client_name', 'date', 'modified_at', 'contact_number', 'vendor_name', 'vendor_company', 'rate', 'currency', 'contract_type', 'status', 'comments', 'user__username')
+
+        for row in rows:
+            rownum += 1
+
+            for col_num in range(len(row)):
+                ws.write(rownum, col_num, str(row[col_num]), font_style)
+
+    else:
+        columns = ['Client Name', 'Entry Date', 'Modified At', 'Contact Number', 'Vendor Name', 'Vendor Company', 'Rate', 'Currency', 'Contract Type', 'Status', 'Comments']
+
+        for col_num in range(len(columns)):
+            ws.write(rownum, col_num, columns[col_num], font_style)
+
+        font_style = xlwt.XFStyle()
+
+        rows = MyTable.objects.filter(user=request.user).values_list('client_name', 'date', 'modified_at', 'contact_number', 'vendor_name', 'vendor_company', 'rate', 'currency', 'contract_type', 'status', 'comments')
+
+        for row in rows:
+            rownum += 1
+
+            for col_num in range(len(row)):
+                ws.write(rownum, col_num, str(row[col_num]), font_style)
+
+    wb.save(response)
+
+    return response
