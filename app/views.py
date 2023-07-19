@@ -119,7 +119,6 @@ def delete(request, id):
     except Exception as e:
         return HttpResponseServerError(f"An error occurred: {str(e)}")
 
-
 def export_excel(request):
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = 'attachment; filename=Data_' + str(datetime.datetime.now()) + '.xls'
