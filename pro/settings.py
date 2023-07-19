@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_filters',
     'app',
 ]
 
@@ -81,6 +80,11 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
+# SESSION_COOKIE_AGE = 10
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 
 # Password validation

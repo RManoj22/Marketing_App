@@ -4,9 +4,7 @@
     <div class="card mt-5">
         <div class="card-header text-bg-dark d-flex justify-content-between">
             <h4 class="text-center">Details</h4>
-            <a href="{% url 'add' %}">
-                <button class="btn btn-outline-primary">Add New <i class="fa-solid fa-plus"></i></button>
-            </a>
+            <a href="{% url 'add' %}" class="btn btn-outline-primary">Add New <i class="fa-solid fa-plus"></i></a>
         </div>
         <div class="card-body">
             <div class="mt-2">
@@ -19,8 +17,7 @@
                     <label class="form-label ms-5">User : </label>
                     {{filter.form.user}}
                     {% endif %}
-                    <button class="btn btn-primary btn-sm ms-5" type="submit">Filter <i
-                            class="fa-solid fa-filter"></i></button>
+                    <button class="btn btn-primary btn-sm ms-5" type="submit">Filter <i class="fa-solid fa-filter"></i></button>
                     <a class="btn btn-primary btn-sm ms-5" href="{% url 'export' %}">Export as Excel <i class="fa-solid fa-file-export"></i></a>
                 </form>
             </div>

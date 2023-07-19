@@ -1,13 +1,13 @@
-import datetime
 import xlwt
-from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseForbidden, HttpResponseServerError
+import datetime
 from .models import MyTable
-from .forms import MyTableForm, SignUpForm, LoginForm
 from .filters import FormFilter
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, redirect
+from .forms import MyTableForm, SignUpForm, LoginForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponse, HttpResponseForbidden, HttpResponseServerError
 
 
 def signup(request):
@@ -25,6 +25,7 @@ def signup(request):
         else:
             form = SignUpForm()
         return render(request, 'sign_up.html', {'form': form, 'hide_signin': hide_signin})
+
 
 def signin(request):
     hide_signin = False
@@ -46,9 +47,11 @@ def signin(request):
             form = LoginForm()
     return render(request, 'sign_in.html' , {'form':form, 'hide_signin': hide_signin})
 
+
 def signout(request):
     logout(request)
     return redirect('signin')
+
 
 @login_required(login_url='signin')
 def details(request):
@@ -62,6 +65,7 @@ def details(request):
         return render(request, 'details.html', {'details': details, 'filter': filter})
     except Exception as e:
         return HttpResponseServerError(f"An error occurred: {str(e)}")
+
 
 @login_required(login_url='signin')
 def addnew(request):
@@ -77,6 +81,7 @@ def addnew(request):
         except Exception as e:
             return HttpResponseServerError(f"An error occurred: {str(e)}")
     return render(request, 'form.html', {'form': form})
+
 
 @login_required(login_url='signin')
 def edit(request, id):
@@ -99,6 +104,7 @@ def edit(request, id):
     except Exception as e:
         return HttpResponseServerError(f"An error occurred: {str(e)}")
 
+
 @login_required(login_url='signin')
 def delete(request, id):
     try:
@@ -112,6 +118,7 @@ def delete(request, id):
         return HttpResponseServerError("Record not found.")
     except Exception as e:
         return HttpResponseServerError(f"An error occurred: {str(e)}")
+
 
 def export_excel(request):
     response = HttpResponse(content_type='application/ms-excel')

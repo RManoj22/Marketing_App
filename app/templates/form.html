@@ -62,13 +62,13 @@
                             </div>
                             <div class="col-md-6 mt-3">
                                 <div class="form-floating">
-                                    {{ form.comments }}
+                                    {{ form.comments  }}
                                     <label>Comments</label>
                                 </div>
                             </div>
                         </div>
-                        <div class=" text-center">
-                            <div class="mx-auto">{{form.errors}}</div>
+                        <div>
+                            {{form.errors}}
                         </div>
                     </div>
                     <div class="card-footer">
@@ -99,16 +99,28 @@
   }
 
   function confirmCancel() {
+    const inputFields = document.querySelectorAll('input[type="text"], input[type="number"], textarea');
+    let hasNonEmptyField = false;
 
-    const confirmation = confirm('Are you sure you want to cancel?');
+    inputFields.forEach((field) => {
+        if (field.value.trim() !== '') {
+            hasNonEmptyField = true;
+            return;
+        }
+    });
 
-    if (confirmation) {
-      window.location.href = "{% url 'details' %}";
+    if (hasNonEmptyField) {
+        const confirmation = confirm('Are you sure you want to cancel?');
+
+        if (confirmation) {
+            window.location.href = "{% url 'details' %}";
+        } else {
+            event.preventDefault();
+        }
+    } else {
+        window.location.href = "{% url 'details' %}";
     }
+}
 
-    else {
-      event.preventDefault();
-    }
-  }
 </script>
 {% endblock %}
