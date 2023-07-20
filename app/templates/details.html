@@ -9,16 +9,16 @@
         <div class="card-body">
             <div class="mt-2">
                 <form method="get">
-                    <label class="form-label">Status : </label>
+                    <label class="form-label ms-3">Status : </label>
                     {{filter.form.status}}
-                    <label class="form-label ms-5">Currency : </label>
+                    <label class="form-label">Currency : </label>
                     {{filter.form.currency}}
                     {% if user.is_superuser %}
-                    <label class="form-label ms-5">User : </label>
+                    <label class="form-label">User : </label>
                     {{filter.form.user}}
                     {% endif %}
-                    <button class="btn btn-primary btn-sm ms-5" type="submit">Filter <i class="fa-solid fa-filter"></i></button>
-                    <a class="btn btn-primary btn-sm ms-5" href="{% url 'export' %}">Export as Excel <i class="fa-solid fa-file-export"></i></a>
+                    <button class="btn btn-primary btn-sm ms-3" type="submit">Filter <i class="fa-solid fa-filter"></i></button>
+                    <a class="btn btn-primary btn-sm ms-3" href="{% url 'export' %}">Export as Excel <i class="fa-solid fa-file-export"></i></a>
                 </form>
             </div>
             <div class="table-responsive">

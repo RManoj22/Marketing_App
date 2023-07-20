@@ -12,27 +12,35 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-8 mt-3 mx-auto">
+                            <div class="col-md-6 mt-3 mx-auto">
                                 <div class="form-floating">
                                     {{ form.username }}
                                     <label for="{{ form.username.id_for_label }}">Username</label>
                                 </div>
-                                <div class="form-floating mt-3">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mt-3 mx-auto">
+                                <div class="form-floating">
                                     <input type="password" class="form-control" id="{{ form.password1.id_for_label }}" name="{{ form.password1.html_name }}" placeholder="Password">
                                     <label for="{{ form.password1.id_for_label }}">Password</label>
                                 </div>
-                                <div class="form-floating mt-3">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mt-3 mx-auto">
+                                <div class="form-floating">
                                     <input type="password" class="form-control" id="{{ form.password2.id_for_label }}" name="{{ form.password2.html_name }}" placeholder="Confirm Password">
                                     <label for="{{ form.password2.id_for_label }}">Confirm Password</label>
                                 </div>
                             </div>
                         </div>
-                        <div class="mx-auto">{{form.errors}}</div>
                     </div>
                     <div class="card-footer">
                         <div class="text-center">
                             <input type="submit" class="btn btn-primary" value="Sign Up">
-                            <div class="mt-2">Already have an account? <a href="{% url 'signin' %}">Log In</a></div>
+                            <div class="mt-2">Already have an account? </div>
+                            <div><a href="{% url 'signin' %}">Log In</a></div>
                         </div>
                     </div>
                 </div>
