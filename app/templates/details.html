@@ -9,15 +9,18 @@
         <div class="card-body">
             <div class="mt-2">
                 <form method="get">
+                    <!-- filter the fields -->
                     <label class="form-label ms-3">Status : </label>
                     {{filter.form.status}}
                     <label class="form-label">Currency : </label>
                     {{filter.form.currency}}
+                    <!-- show filter by user for admin -->
                     {% if user.is_superuser %}
                     <label class="form-label">User : </label>
                     {{filter.form.user}}
                     {% endif %}
                     <button class="btn btn-primary btn-sm ms-3" type="submit">Filter <i class="fa-solid fa-filter"></i></button>
+                    <!-- export to excel -->
                     <a class="btn btn-primary btn-sm ms-3" href="{% url 'export' %}">Export as Excel <i class="fa-solid fa-file-export"></i></a>
                 </form>
             </div>
@@ -47,6 +50,7 @@
                         {% for i in details %}
                         <tr>
                             <td>{{i.client_name}}</td>
+                            <!-- show date by defined format (refered in django docs) -->
                             <td>{{i.date | date:"j/n/Y, h:i a"}}</td>
                             <td>{{i.modified_at|date:"j/n/Y, h:i a"}}</td>
                             <td>{{i.contact_number}}</td>

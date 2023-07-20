@@ -82,8 +82,12 @@ DATABASES = {
 }
 
 
+# `SESSION_COOKIE_AGE = 300` sets the age of the session cookie in seconds. In this case, the session
+# cookie will expire after 300 seconds (5 minutes) of inactivity.
 SESSION_COOKIE_AGE = 300
 
+# The `SESSION_EXPIRE_AT_BROWSER_CLOSE` setting in Django determines whether a user's session will
+# expire when they close their browser.
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 
