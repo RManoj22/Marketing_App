@@ -35,6 +35,6 @@ jobs:
           export DB_USER=${{ secrets.DB_USER }}
           export DB_PASSWORD=${{ secrets.DB_PASSWORD }}
           export DB_PORT=${{ secrets.DB_PORT }}
-          docker compose down
-          docker compose up --build -d
+          docker-compose down
+          docker-compose up --build -d
         EOF
