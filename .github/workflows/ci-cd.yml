@@ -54,6 +54,12 @@ jobs:
       run: |
         ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
           export IMAGE_NAME=ghcr.io/rmanoj22/django_app:latest
+          export DB_NAME=${{ secrets.DB_NAME }}
+          export DB_USER=${{ secrets.DB_USER }}
+          export DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+          export DB_HOST=${{ secrets.DB_HOST }}
+          export DB_PORT=${{ secrets.DB_PORT }}
+          
           docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.PAT }}
           cd /home/${{ secrets.EC2_USER }}/app/
           docker-compose down
