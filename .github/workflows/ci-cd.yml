@@ -6,8 +6,9 @@ on:
       - main
 
 jobs:
-  deploy:
-    name: Deploy to EC2
+  # Continuous Integration (CI) job: Build and Push Docker Image
+  ci:
+    name: Build and Push Docker Image to GHCR
     runs-on: ubuntu-latest
 
     steps:
@@ -26,26 +27,34 @@ jobs:
     # Step 3: Build and Push Docker Image to GHCR
     - name: Build and Push Docker Image
       run: |
-        IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/django_app:latest
+        IMAGE_NAME=ghcr.io/rmanoj22/django_app:latest
         docker build -t $IMAGE_NAME .
         docker push $IMAGE_NAME
 
-    # Step 4: Set up SSH for EC2
+  # Continuous Deployment (CD) job: Deploy Docker Image to EC2
+  cd:
+    name: Pull and Deploy Docker Image to EC2
+    runs-on: ubuntu-latest
+    needs: ci  # Ensure the CI job completes first
+
+    steps:
+    # Step 1: Set up SSH for EC2
     - name: Set up SSH
       uses: webfactory/ssh-agent@v0.5.3
       with:
         ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
 
+    # Step 2: Add EC2 host to known_hosts
     - name: Add EC2 host to known_hosts
       run: |
         ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
-    # Step 5: Pull and Deploy Pre-Built Image on EC2
+    # Step 3: Pull and Deploy Docker Image on EC2
     - name: Pull and Deploy Docker Image on EC2
       run: |
         ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-          export IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/django_app:latest
-          docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+          export IMAGE_NAME=ghcr.io/rmanoj22/django_app:latest
+          docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.PAT }}
           cd /home/${{ secrets.EC2_USER }}/app/
           docker-compose down
           docker-compose pull web
