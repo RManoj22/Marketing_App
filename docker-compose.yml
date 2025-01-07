@@ -1,8 +1,6 @@
 services:
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ghcr.io/${REPO_OWNER}/django_app:latest
     container_name: django_app
     ports:
       - "8000:8000"
@@ -14,8 +12,6 @@ services:
       - DB_PORT=${DB_PORT}
     depends_on:
       - db
-    volumes:
-      - .:/app
 
   db:
     image: postgres:15

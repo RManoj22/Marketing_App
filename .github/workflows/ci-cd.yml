@@ -11,9 +11,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # Step 1: Checkout code
     - name: Checkout code
       uses: actions/checkout@v3
 
+    # Step 2: Log in to GitHub Container Registry
+    - name: Log in to GitHub Container Registry
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.PAT }}
+
+    # Step 3: Build and Push Docker Image to GHCR
+    - name: Build and Push Docker Image
+      run: |
+        IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/django_app:latest
+        docker build -t $IMAGE_NAME .
+        docker push $IMAGE_NAME
+
+    # Step 4: Set up SSH for EC2
     - name: Set up SSH
       uses: webfactory/ssh-agent@v0.5.3
       with:
@@ -23,18 +40,14 @@ jobs:
       run: |
         ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
-    - name: Copy project files to EC2
-      run: |
-        rsync -avz --exclude '.git' . ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USER }}/app/
-
-    - name: Deploy with Docker Compose
+    # Step 5: Pull and Deploy Pre-Built Image on EC2
+    - name: Pull and Deploy Docker Image on EC2
       run: |
         ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+          export IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/django_app:latest
+          docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
           cd /home/${{ secrets.EC2_USER }}/app/
-          export DB_NAME=${{ secrets.DB_NAME }}
-          export DB_USER=${{ secrets.DB_USER }}
-          export DB_PASSWORD=${{ secrets.DB_PASSWORD }}
-          export DB_PORT=${{ secrets.DB_PORT }}
           docker-compose down
-          docker-compose up --build -d
+          docker-compose pull web
+          docker-compose up -d
         EOF
